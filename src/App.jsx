@@ -1,12 +1,16 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import DetailsPage from "./pages/DetailsPage";
+
 function App() {
   return (
     <>
-      <div className="bg-blue-500 text-white p-4 rounded-lg">
-        <h1 className="text-2xl font-bold">Weather App</h1>
-        <p className="mt-2">
-          Get the latest weather updates for your location.
-        </p>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/details/:day" element={<DetailsPage />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
