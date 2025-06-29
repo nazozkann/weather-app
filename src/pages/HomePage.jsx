@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useCurrentWeather, useWeeklyWeather } from "../hooks/useWeatherData";
+import WeatherCard from "../components/WeatherCard";
+import ForecastList from "../components/ForecastList";
 
 export default function HomePage() {
   const [city, setCity] = useState("Istanbul");
@@ -39,32 +41,12 @@ export default function HomePage() {
       {errorCurrent && (
         <p>Error fetching current weather: {errorCurrent.message}</p>
       )}
-      {currentWeather && (
-        <div>
-          <h2>Current Weather in {currentWeather.name}</h2>
-          <p>Temperature: {currentWeather.main.temp}°C</p>
-          <p>Condition: {currentWeather.weather[0].description}</p>
-        </div>
-      )}
+      {currentWeather && <WeatherCard data={currentWeather} />}
       {loadingWeekly && <p>Loading weekly weather...</p>}
       {errorWeekly && (
         <p>Error fetching weekly weather: {errorWeekly.message}</p>
       )}
-      {weeklyWeather && (
-        <div>
-          <h2>Weekly Weather Forecast</h2>
-          <ul>
-            {weeklyWeather.daily.map((day, index) => (
-              <li key={index}>
-                <p>
-                  Day {index + 1}: {day.temp.day}°F,{" "}
-                  {day.weather[0].description}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {weeklyWeather && <ForecastList daily={weeklyWeather.daily} />}
     </>
   );
 }

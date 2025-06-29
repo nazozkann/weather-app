@@ -19,7 +19,7 @@ export function getCurrentWeather(city) {
 }
 export function getWeeklyWeather({ lat, lon }) {
   return weatherApi
-    .get("/data/2.5/onecall", {
+    .get("/data/3.0/onecall", {
       params: {
         lat,
         lon,
