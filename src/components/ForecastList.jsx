@@ -12,8 +12,11 @@ export default function ForecastList({ daily, city, isLoading }) {
       </div>
     );
   }
+  if (!daily || !Array.isArray(daily)) {
+    return <p>No forecast data available</p>;
+  }
   return (
-    <div>
+    <div className="flex flex-col gap-4 bg-gray-300 dark:bg-gray-900 p-4 rounded-lg shadow-sm font-outfit font-[400] text-gray-600 dark:text-gray-200">
       {daily.map((day, index) => (
         <Link
           key={day.dt || index}

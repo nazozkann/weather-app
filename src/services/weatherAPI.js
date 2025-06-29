@@ -42,16 +42,16 @@ export function getCurrentWeatherByCoords(coords) {
 
 // API TEST HERE //
 
-// getCurrentWeather("New York")
-//   .then((data) => console.log("Current Weather:", data))
-//   .catch((error) => console.error("Error fetching current weather:", error));
+getCurrentWeather("New York")
+  .then((data) => console.log("Current Weather:", data))
+  .catch((error) => console.error("Error fetching current weather:", error));
 
-// getCurrentWeather("Los Angeles")
-//   .then((current) =>
-//     console.log("Current Weather in Los Angeles:", current.coord)
-//   )
-//   .catch((error) =>
-//     console.error("Error fetching current weather in Los Angeles:", error)
-//   );
+getCurrentWeather("Los Angeles")
+  .then((current) =>
+    console.log("Current Weather in Los Angeles:", current.coord)
+  )
+  .catch((error) =>
+    console.error("Error fetching current weather in Los Angeles:", error)
+  );
 
 export default weatherApi;
