@@ -1,0 +1,8 @@
+{
+  "app_title": "Weather Forecast App",
+  "search_placeholder": "Enter city",
+  "get_button": "Get",
+  "loading": "Loading...",
+  "error": "Error:",
+  "daily_forecast": "Daily Forecast"
+}

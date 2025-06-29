@@ -9,6 +9,7 @@ export default function DailyCard({ data }) {
   const dayName = format(fromUnixTime(dt), "EEEE");
   return (
     <div>
+      {console.log("Daily Card Data:", data)}
       <p>{dayName}</p>
       <img
         src={`http://openweathermap.org/img/wn/${icon}@2x.png`}

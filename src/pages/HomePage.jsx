@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useCurrentWeather, useWeeklyWeather } from "../hooks/useWeatherData";
+import { useTranslation } from "react-i18next";
 import WeatherCard from "../components/WeatherCard";
 import ForecastList from "../components/ForecastList";
 
 export default function HomePage() {
+  const { t } = useTranslation();
   const [city, setCity] = useState("Istanbul");
   const {
     data: currentWeather,
@@ -26,7 +28,7 @@ export default function HomePage() {
 
   return (
     <>
-      <h1>Weather App</h1>
+      <h1>{t("app_title")}</h1>
       <p>Get the latest weather updates for your location.</p>
       <form onSubmit={onSubmit}>
         <input
@@ -46,7 +48,12 @@ export default function HomePage() {
       {errorWeekly && (
         <p>Error fetching weekly weather: {errorWeekly.message}</p>
       )}
-      {weeklyWeather && <ForecastList daily={weeklyWeather.daily} />}
+      {weeklyWeather && (
+        <div>
+          {console.log(weeklyWeather)}
+          <ForecastList daily={weeklyWeather.daily} city={city} />
+        </div>
+      )}
     </>
   );
 }

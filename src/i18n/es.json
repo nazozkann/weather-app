@@ -1,0 +1,8 @@
+{
+  "app_title": "Aplicación de Pronóstico del Tiempo",
+  "search_placeholder": "Ingrese ciudad",
+  "get_button": "Obtener",
+  "loading": "Cargando...",
+  "error": "Error:",
+  "daily_forecast": "Pronóstico Diario"
+}
