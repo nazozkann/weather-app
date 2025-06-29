@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import {
-  useCurrentWeather,
   useCurrentWeatherByCoords,
   useWeeklyWeather,
 } from "../hooks/useWeatherData";
@@ -10,12 +9,13 @@ import ForecastList from "../components/ForecastList";
 import SearchBar from "../components/SearchBar";
 import LoadingWeatherCard from "../components/LoadingWeatherCard";
 import GeoErrorComponent from "../components/GeoErrorComponent";
+import CityWeather from "../components/CityWeather";
 
 export default function HomePage() {
   const { t } = useTranslation();
-  const [city, setCity] = useState(null);
   const [coords, setCoords] = useState(null);
   const [geoError, setGeoError] = useState(null);
+  const [cities, setCities] = useState([]);
 
   useEffect(() => {
     if ("geolocation" in navigator) {
@@ -44,25 +44,11 @@ export default function HomePage() {
         { enableHighAccuracy: true, timeout: 10000, maximumAge: 600000 }
       );
     }
-  }, []);
+  }, [t]);
 
-  const handleSearch = (cityTerm) => {
-    if (!cityTerm) return;
-    setCity(cityTerm);
-    setCoords(null);
-  };
-
-  const cityQuery = useCurrentWeather(city);
   const coordsQuery = useCurrentWeatherByCoords(coords);
-
-  const forecastByCity = useWeeklyWeather(cityQuery.data?.coord);
   const forecastByCoords = useWeeklyWeather(coords);
 
-  const {
-    data: currentWeatherCity,
-    isLoading: loadingCurrentCity,
-    error: errorCurrentCity,
-  } = cityQuery;
   const {
     data: currentWeatherCoords,
     isLoading: loadingCurrentCoords,
@@ -70,24 +56,23 @@ export default function HomePage() {
   } = coordsQuery;
 
   const {
-    data: weeklyWeatherCity,
-    isLoading: loadingWeeklyCity,
-    error: errorWeeklyCity,
-  } = forecastByCity;
-  const {
     data: weeklyWeatherCoords,
     isLoading: loadingWeeklyCoords,
     error: errorWeeklyCoords,
   } = forecastByCoords;
 
-  // Decide which data to use based on city or coords
-  const currentWeather = city ? currentWeatherCity : currentWeatherCoords;
-  const loadingCurrent = city ? loadingCurrentCity : loadingCurrentCoords;
-  const errorCurrent = city ? errorCurrentCity : errorCurrentCoords;
+  const handleSearch = (cityTerm) => {
+    if (!cityTerm) return;
+    if (!cities.includes(cityTerm)) {
+      setCities((prev) => [...prev, cityTerm]);
+    }
+  };
 
-  const weeklyWeather = city ? weeklyWeatherCity : weeklyWeatherCoords;
-  const loadingWeekly = city ? loadingWeeklyCity : loadingWeeklyCoords;
-  const errorWeekly = city ? errorWeeklyCity : errorWeeklyCoords;
+  const handleRemoveCity = (cityToRemove) => {
+    setCities((prevCities) =>
+      prevCities.filter((city) => city !== cityToRemove)
+    );
+  };
 
   if (geoError) {
     return <GeoErrorComponent error={geoError} />;
@@ -98,21 +83,35 @@ export default function HomePage() {
       <h1>{t("app_title")}</h1>
       <p>Get the latest weather updates for your location.</p>
       <SearchBar onSearch={handleSearch} />
-      {loadingCurrent && <LoadingWeatherCard />}
-      {errorCurrent && (
-        <p>Error fetching current weather: {errorCurrent.message}</p>
+
+      {loadingCurrentCoords && <LoadingWeatherCard />}
+      {errorCurrentCoords && (
+        <p>Error fetching current weather: {errorCurrentCoords.message}</p>
       )}
-      {currentWeather && <WeatherCard data={currentWeather} />}
-      {loadingWeekly && <ForecastList isLoading />}
-      {errorWeekly && (
-        <p>Error fetching weekly weather: {errorWeekly.message}</p>
+      {currentWeatherCoords && <WeatherCard data={currentWeatherCoords} />}
+
+      {loadingWeeklyCoords && <ForecastList isLoading />}
+      {errorWeeklyCoords && (
+        <p>Error fetching weekly weather: {errorWeeklyCoords.message}</p>
       )}
-      {weeklyWeather && (
+      {weeklyWeatherCoords && (
         <div>
-          {console.log(weeklyWeather)}
-          <ForecastList daily={weeklyWeather.daily} city={city} />
+          <ForecastList
+            daily={weeklyWeatherCoords.daily}
+            city={currentWeatherCoords?.name}
+          />
         </div>
       )}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+        {cities.map((city) => (
+          <CityWeather
+            key={city}
+            city={city}
+            onRemove={() => handleRemoveCity(city)}
+          />
+        ))}
+      </div>
     </>
   );
 }
