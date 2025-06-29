@@ -29,16 +29,29 @@ export function getWeeklyWeather({ lat, lon }) {
     .then((response) => response.data);
 }
 
-getCurrentWeather("New York")
-  .then((data) => console.log("Current Weather:", data))
-  .catch((error) => console.error("Error fetching current weather:", error));
+export function getCurrentWeatherByCoords(coords) {
+  return weatherApi
+    .get("/data/2.5/weather", {
+      params: {
+        lat: coords.lat,
+        lon: coords.lon,
+      },
+    })
+    .then((response) => response.data);
+}
 
-getCurrentWeather("Los Angeles")
-  .then((current) =>
-    console.log("Current Weather in Los Angeles:", current.coord)
-  )
-  .catch((error) =>
-    console.error("Error fetching current weather in Los Angeles:", error)
-  );
+// API TEST HERE //
+
+// getCurrentWeather("New York")
+//   .then((data) => console.log("Current Weather:", data))
+//   .catch((error) => console.error("Error fetching current weather:", error));
+
+// getCurrentWeather("Los Angeles")
+//   .then((current) =>
+//     console.log("Current Weather in Los Angeles:", current.coord)
+//   )
+//   .catch((error) =>
+//     console.error("Error fetching current weather in Los Angeles:", error)
+//   );
 
 export default weatherApi;

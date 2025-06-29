@@ -4,5 +4,6 @@
   "get_button": "Get",
   "loading": "Loading...",
   "error": "Error:",
-  "daily_forecast": "Daily Forecast"
+  "daily_forecast": "Daily Forecast",
+  "search": "Search"
 }

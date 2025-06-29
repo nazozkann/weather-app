@@ -4,5 +4,6 @@
   "get_button": "Obtener",
   "loading": "Cargando...",
   "error": "Error:",
-  "daily_forecast": "Pronóstico Diario"
+  "daily_forecast": "Pronóstico Diario",
+  "search": "Buscar"
 }
