@@ -4,6 +4,7 @@ import { getWeatherIconFile } from "../services/getWeatherIcon";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+// eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "motion/react";
 import Header from "../components/Header";
 import WeeklyWeatherContainer from "../containers/WeeklyWeatherContainer";

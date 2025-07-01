@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
+import React, { memo } from "react";
 
-export default function WeatherDetailCard({ detail }) {
+function WeatherDetailCard({ detail }) {
   const { t } = useTranslation();
 
   return (
@@ -64,3 +65,5 @@ export default function WeatherDetailCard({ detail }) {
     </div>
   );
 }
+
+export default memo(WeatherDetailCard);
