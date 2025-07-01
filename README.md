@@ -38,7 +38,7 @@ Contributions are welcome! Please fork the repository and submit a pull request.
 ## Acknowledgments
 
 - [OpenWeatherMap](https://openweathermap.org/) for the free weather API
-- [Font Awesome](https://fontawesome.com/) for icons (if used)
+- [Font Awesome](https://fontawesome.com/) for icons
 - All contributors
 
 ---
