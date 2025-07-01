@@ -1,9 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { useCurrentWeather } from "../hooks/useWeatherData";
 import { getWeatherIconFile } from "../services/getWeatherIcon";
+import { useTemperatureUnit } from "../hooks/useTemperatureUnit";
 
 export default function CityWeather({ city, onRemove }) {
   const { t } = useTranslation();
+  const { formatTemp, unit } = useTemperatureUnit();
 
   const currentWeatherQuery = useCurrentWeather(city);
 
@@ -21,6 +23,7 @@ export default function CityWeather({ city, onRemove }) {
         <button
           className="text-right w-full font-[200] text-2xl cursor-pointer dark:hover:text-gray-50 hover:text-gray-900 transition-colors duration-300"
           onClick={onRemove}
+          aria-label={t("remove_city")}
         >
           ×
         </button>
@@ -41,8 +44,10 @@ export default function CityWeather({ city, onRemove }) {
         <div className="flex flex-col items-center gap-6">
           <div className="flex items-center justify-center">
             <div className="flex flex-row items-start justify-center gap-1">
-              <p className="text-6xl">{Math.round(current.main.temp)}</p>
-              <p className="font-[200] text-2xl">°C</p>
+              <p className="text-6xl">{formatTemp(current.main.temp)}</p>
+              <p className="font-[200] text-2xl">
+                {unit === "celsius" ? "°C" : "°F"}
+              </p>
             </div>
             <img
               src={iconUrl}

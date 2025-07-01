@@ -4,6 +4,7 @@ import { getWeatherIconFile } from "../services/getWeatherIcon";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useTemperatureUnit } from "../hooks/useTemperatureUnit";
 // eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "motion/react";
 import Header from "../components/Header";
@@ -13,6 +14,7 @@ import { CAROUSEL_ANIMATION } from "../constants/AnimationConstants";
 
 export default function WeeklyDetailsPage() {
   const { t } = useTranslation();
+  const { formatTemp, unit } = useTemperatureUnit();
   const { state } = useLocation();
   const navigate = useNavigate();
   const { city, coords } = state || {};
@@ -113,7 +115,15 @@ export default function WeeklyDetailsPage() {
                     transition={CAROUSEL_ANIMATION}
                     style={{ zIndex, transformStyle: "preserve-3d" }}
                     onClick={() => setSelectedIndex(idx)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        setSelectedIndex(idx);
+                      }
+                    }}
                     className="w-40 sm:w-48 lg:w-56 flex-shrink-0"
+                    tabIndex={0}
+                    role="button"
+                    aria-label={`${dayString} forecast`}
                   >
                     <motion.div
                       className="bg-opacity-90 backdrop-blur-sm py-8 sm:py-12 lg:py-16 px-2 sm:px-3 lg:px-4 rounded-lg text-center border-2 border-gray-800 dark:border-gray-300"
@@ -128,10 +138,10 @@ export default function WeeklyDetailsPage() {
 
                       <div className="flex justify-center items-start mt-4 sm:mt-6 lg:mt-8">
                         <p className="text-3xl sm:text-5xl lg:text-6xl font-semibold font-outline">
-                          {Math.round(dayData.temp.day)}
+                          {formatTemp(dayData.temp.day)}
                         </p>
                         <p className="text-sm sm:text-base lg:text-lg font-outline">
-                          °C
+                          {unit === "celsius" ? "°C" : "°F"}
                         </p>
                       </div>
 

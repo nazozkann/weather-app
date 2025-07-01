@@ -3,9 +3,11 @@ import { getWeatherIconFile } from "../services/getWeatherIcon";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useTemperatureUnit } from "../hooks/useTemperatureUnit";
 
 export default function WeatherCard({ data, onDescriptionChange }) {
   const { t } = useTranslation();
+  const { formatTemp, unit } = useTemperatureUnit();
   const {
     name,
     sys: { country },
@@ -29,10 +31,10 @@ export default function WeatherCard({ data, onDescriptionChange }) {
       <div className="flex flex-col lg:flex-row items-center lg:items-end gap-4 lg:gap-0 text-center lg:text-left">
         <div className="flex items-start">
           <p className="text-[6rem] sm:text-[12rem] lg:text-[16rem] leading-none">
-            {Math.round(temp)}
+            {formatTemp(temp)}
           </p>
           <p className="text-3xl sm:text-4xl lg:text-6xl ml-2 mt-2 sm:mt-4 lg:mt-8 font-[200]">
-            °C
+            {unit === "celsius" ? "°C" : "°F"}
           </p>
         </div>
         <div className="lg:mb-6">

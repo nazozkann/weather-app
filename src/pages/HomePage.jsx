@@ -36,7 +36,11 @@ export default function HomePage() {
           <Header />
           <div className="flex-1 flex items-center justify-center">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-16 w-16 sm:h-20 sm:w-20 border-b-4 border-gray-800 dark:border-gray-200 mx-auto mb-6"></div>
+              <div
+                className="animate-spin rounded-full h-16 w-16 sm:h-20 sm:w-20 border-b-4 border-gray-800 dark:border-gray-200 mx-auto mb-6"
+                role="status"
+                aria-label={t("loading")}
+              ></div>
 
               <div className="text-2xl sm:text-3xl lg:text-4xl font-[300] mb-2">
                 {t("loading")}...
