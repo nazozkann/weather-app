@@ -6,9 +6,11 @@ export { CitiesContext };
 
 export function CitiesProvider({ children }) {
   const [cities, setCities] = useState([]);
+  const [selectedCity, setSelectedCity] = useState(null);
 
   const addCity = (cityTerm) => {
     if (!cityTerm) return;
+    setSelectedCity(cityTerm);
     if (!cities.includes(cityTerm)) {
       setCities((prev) => [...prev, cityTerm]);
     }
@@ -21,7 +23,9 @@ export function CitiesProvider({ children }) {
   };
 
   return (
-    <CitiesContext.Provider value={{ cities, addCity, removeCity }}>
+    <CitiesContext.Provider
+      value={{ cities, addCity, removeCity, selectedCity, setSelectedCity }}
+    >
       {children}
     </CitiesContext.Provider>
   );

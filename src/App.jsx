@@ -1,19 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import DetailsPage from "./pages/DetailsPage";
+import WeeklyDetailsPage from "./pages/WeeklyDetailsPage";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { CitiesProvider } from "./contexts/CitiesContext";
-import Header from "./components/Header";
+import DetailsPage from "./pages/DetailsPage";
 
 function App() {
   return (
     <ThemeProvider>
       <CitiesProvider>
         <BrowserRouter>
-          <Header />
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/details/:day" element={<DetailsPage />} />
+            <Route path="/weekly-details" element={<WeeklyDetailsPage />} />
+            <Route path="/weekly-details/:day" element={<DetailsPage />} />
           </Routes>
         </BrowserRouter>
       </CitiesProvider>

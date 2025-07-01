@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useTheme } from "../hooks/useTheme";
 import { useCities } from "../hooks/useCities";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { MdOutlineLightMode } from "react-icons/md";
 import { MdOutlineDarkMode } from "react-icons/md";
@@ -18,8 +18,10 @@ export default function Header() {
     i18n.changeLanguage(i18n.language === "en" ? "es" : "en");
   };
   return (
-    <header className="flex justify-between items-center p-4 text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-gray-900 pt-6 gap-12">
-      <h1 className="font-quicksand font-[700] text-3xl">Meteoly</h1>
+    <header className="flex justify-between items-start p-4 text-gray-900 dark:text-gray-100 pt-6 gap-12">
+      <Link to="/" className="font-quicksand font-[700] text-3xl">
+        Meteoly
+      </Link>
       {isHomePage && <SearchBar onSearch={addCity} />}
       <div className="flex items-center gap-4">
         <button onClick={toggleTheme}>

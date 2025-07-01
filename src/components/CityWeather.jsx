@@ -1,11 +1,11 @@
 import { useTranslation } from "react-i18next";
-import { useCurrentWeather, useWeeklyWeather } from "../hooks/useWeatherData";
+import { useCurrentWeather } from "../hooks/useWeatherData";
+import { getWeatherIconFile } from "../services/getWeatherIcon";
 
 export default function CityWeather({ city, onRemove }) {
   const { t } = useTranslation();
 
   const currentWeatherQuery = useCurrentWeather(city);
-  const forecastQuery = useWeeklyWeather(currentWeatherQuery.data?.coord);
 
   const {
     data: current,
@@ -13,17 +13,20 @@ export default function CityWeather({ city, onRemove }) {
     error: errorCurrent,
   } = currentWeatherQuery;
 
-  const {
-    data: forecast,
-    isLoading: loadingForecast,
-    error: errorForecast,
-  } = forecastQuery;
+  const iconUrl = getWeatherIconFile(current?.weather[0]?.icon);
 
   return (
-    <div>
-      {onRemove && <button onClick={onRemove}>×</button>}
+    <div className="flex flex-col items-center gap-2 border-2 border-gray-500 dark:border-gray-300 p-4 rounded-lg font-outfit font-[400] text-gray-900 dark:text-gray-200 backdrop-blur-sm mt-[6rem]">
+      {onRemove && (
+        <button
+          className="text-right w-full font-[200] text-2xl cursor-pointer dark:hover:text-gray-50 hover:text-gray-900 transition-colors duration-300"
+          onClick={onRemove}
+        >
+          ×
+        </button>
+      )}
 
-      <h2>{city}</h2>
+      <h2 className="text-xl capitalize mt-[-1.5rem] mb-6">{city}</h2>
 
       {loadingCurrent ? (
         <div>
@@ -35,51 +38,21 @@ export default function CityWeather({ city, onRemove }) {
           {t("error")} {errorCurrent.message}
         </p>
       ) : current ? (
-        <div>
-          <div>
+        <div className="flex flex-col items-center gap-6">
+          <div className="flex items-center justify-center">
+            <div className="flex flex-row items-start justify-center gap-1">
+              <p className="text-6xl">{Math.round(current.main.temp)}</p>
+              <p className="font-[200] text-2xl">°C</p>
+            </div>
             <img
-              src={`http://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png`}
+              src={iconUrl}
               alt={current.weather[0].description}
+              className="brightness-30 dark:brightness-140 saturate-0 w-12 h-12"
             />
           </div>
-          <p>{Math.round(current.main.temp)}°C</p>
-          <p>{current.weather[0].description}</p>
-        </div>
-      ) : null}
-
-      {loadingForecast ? (
-        <div>
-          <div></div>
-          <div></div>
-        </div>
-      ) : errorForecast ? (
-        <p>
-          {t("error")} {errorForecast.message}
-        </p>
-      ) : forecast && forecast.daily ? (
-        <div>
-          <h3>7-Day Forecast</h3>
-          <div>
-            {forecast.daily.slice(0, 5).map((day, index) => (
-              <div key={day.dt}>
-                <span>
-                  {index === 0
-                    ? "Today"
-                    : new Date(day.dt * 1000).toLocaleDateString("en", {
-                        weekday: "short",
-                      })}
-                </span>
-                <img
-                  src={`http://openweathermap.org/img/wn/${day.weather[0].icon}.png`}
-                  alt={day.weather[0].description}
-                />
-                <span>
-                  <span>{Math.round(day.temp.max)}°</span>
-                  <span>{Math.round(day.temp.min)}°</span>
-                </span>
-              </div>
-            ))}
-          </div>
+          <p className="capitalize text-xl capitalize font-[300]">
+            {current.weather[0].description}
+          </p>
         </div>
       ) : null}
     </div>

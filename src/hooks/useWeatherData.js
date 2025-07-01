@@ -1,29 +1,40 @@
 import { useQuery } from "@tanstack/react-query";
 import {
   getCurrentWeather,
-  getWeeklyWeather,
   getCurrentWeatherByCoords,
+  getWeeklyWeather,
 } from "../services/weatherAPI";
+import { useTranslation } from "react-i18next";
 
-export function useCurrentWeather(city) {
-  return useQuery({
-    queryKey: ["currentWeather", city],
-    queryFn: () => getCurrentWeather(city),
-    enabled: Boolean(city),
-  });
-}
-export function useWeeklyWeather(coords) {
-  return useQuery({
-    queryKey: ["weeklyWeather", coords],
-    queryFn: () => getWeeklyWeather(coords),
-    enabled: Boolean(coords?.lat && coords?.lon),
-  });
-}
+export const useCurrentWeather = (city) => {
+  const { i18n } = useTranslation();
+  const lang = i18n.language === "es" ? "es" : "en";
 
-export function useCurrentWeatherByCoords(coords) {
   return useQuery({
-    queryKey: ["currentWeatherByCoords", coords],
-    queryFn: () => getCurrentWeatherByCoords(coords),
-    enabled: Boolean(coords?.lat && coords?.lon),
+    queryKey: ["current-weather", city, lang],
+    queryFn: () => getCurrentWeather(city, lang),
+    enabled: !!city,
   });
-}
+};
+
+export const useCurrentWeatherByCoords = (coords) => {
+  const { i18n } = useTranslation();
+  const lang = i18n.language === "es" ? "es" : "en";
+
+  return useQuery({
+    queryKey: ["current-weather-coords", coords, lang],
+    queryFn: () => getCurrentWeatherByCoords(coords, lang),
+    enabled: !!coords,
+  });
+};
+
+export const useWeeklyWeather = (coords) => {
+  const { i18n } = useTranslation();
+  const lang = i18n.language === "es" ? "es" : "en";
+
+  return useQuery({
+    queryKey: ["weekly-weather", coords, lang],
+    queryFn: () => getWeeklyWeather(coords, lang),
+    enabled: !!coords,
+  });
+};
