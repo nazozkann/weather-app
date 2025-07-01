@@ -11,7 +11,7 @@ function App() {
     <ThemeProvider>
       <CitiesProvider>
         <TemperatureUnitProvider>
-          <BrowserRouter>
+          <BrowserRouter basename="/weather-app">
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/weekly-details" element={<WeeklyDetailsPage />} />
