@@ -18,7 +18,7 @@ export default function CityWeather({ city, onRemove }) {
   const iconUrl = getWeatherIconFile(current?.weather[0]?.icon);
 
   return (
-    <div className="flex flex-col items-center gap-2 border-2 border-gray-500 dark:border-gray-300 p-4 rounded-lg font-outfit font-[400] text-gray-900 dark:text-gray-200 backdrop-blur-sm mt-[6rem]">
+    <div className="flex flex-col items-center gap-2 border-2 border-gray-500 dark:border-gray-300 p-4 rounded-lg font-outfit font-[400] text-gray-900 dark:text-gray-200 backdrop-blur-sm mt-[2rem]">
       {onRemove && (
         <button
           className="text-right w-full font-[200] text-2xl cursor-pointer dark:hover:text-gray-50 hover:text-gray-900 transition-colors duration-300"
