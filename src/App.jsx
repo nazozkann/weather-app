@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import WeeklyDetailsPage from "./pages/WeeklyDetailsPage";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -11,13 +11,13 @@ function App() {
     <ThemeProvider>
       <CitiesProvider>
         <TemperatureUnitProvider>
-          <BrowserRouter basename="/weather-app">
+          <HashRouter>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/weekly-details" element={<WeeklyDetailsPage />} />
               <Route path="/weekly-details/:day" element={<DetailsPage />} />
             </Routes>
-          </BrowserRouter>
+          </HashRouter>
         </TemperatureUnitProvider>
       </CitiesProvider>
     </ThemeProvider>
