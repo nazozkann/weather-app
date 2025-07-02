@@ -6,3 +6,7 @@
   --font-outfit: "Outfit", "sans-serif";
   --font-quicksand: "Quicksand", "sans-serif";
 }
+
+html {
+  font-size: 16px;
+}
